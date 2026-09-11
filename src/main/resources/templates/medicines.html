@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>My Medicines</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <div>
+            <h1>Medical Store Management</h1>
+            <p class="page-subtitle">
+                Manage your medicines and stock
+            </p>
+        </div>
+
+        <a href="/logout" class="btn btn-secondary">
+            Logout
+        </a>
+
+    </div>
+
+
+    <!-- ACTION BAR -->
+
+    <div class="action-bar">
+
+        <a href="/medicines/add" class="btn">
+            + Add Medicine
+        </a>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <form
+        action="/medicines"
+        method="get"
+        class="search-box">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search medicine..."
+            th:value="${search}">
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
+
+    <!-- TABLE -->
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Medicine Name</th>
+
+                    <th>Available Stock</th>
+
+                    <th>Added Time</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr
+                    th:each="medicine : ${medicines.content}">
+
+                    <td
+                        class="medicine-name"
+                        th:text="${medicine.name}">
+                    </td>
+
+                    <td
+                        th:text="${medicine.stock}">
+                    </td>
+
+                    <td
+                        th:text="${medicine.addedTime}">
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                th:href="@{/medicines/edit/{id}(id=${medicine.id})}"
+                                class="btn btn-small">
+                                Edit
+                            </a>
+
+                            <a
+                                th:href="@{/medicines/delete/{id}(id=${medicine.id})}"
+                                class="btn btn-danger btn-small">
+                                Delete
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- PAGINATION -->
+
+    <div class="pagination">
+
+        <span th:if="${medicines.hasPrevious()}">
+
+            <a
+                class="btn btn-secondary btn-small"
+                th:href="@{/medicines(
+                    page=${medicines.number - 1},
+                    search=${search}
+                )}">
+                ← Previous
+            </a>
+
+        </span>
+
+
+        <span class="page-info">
+
+            Page
+
+            <strong
+                th:text="${medicines.number + 1}">
+            </strong>
+
+            of
+
+            <strong
+                th:text="${medicines.totalPages}">
+            </strong>
+
+        </span>
+
+
+        <span th:if="${medicines.hasNext()}">
+
+            <a
+                class="btn btn-small"
+                th:href="@{/medicines(
+                    page=${medicines.number + 1},
+                    search=${search}
+                )}">
+               
+            </a>
+
+        </span>
+
+    </div>
+
+</div>
+
+</body>
+</html>

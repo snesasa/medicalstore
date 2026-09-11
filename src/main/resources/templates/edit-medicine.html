@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Edit Medicine</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="auth-page">
+
+    <div class="form-container">
+
+        <h1>Medical Store Management</h1>
+        <h2>Edit Medicine</h2>
+
+        <form
+            th:action="@{/medicines/edit/{id}(id=${medicine.id})}"
+            method="post">
+
+            <div class="form-group">
+
+                <label>Medicine Name</label>
+
+                <input
+                    type="text"
+                    name="name"
+                    th:value="${medicine.name}"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Available Stock</label>
+
+                <input
+                    type="number"
+                    name="stock"
+                    th:value="${medicine.stock}"
+                    min="0"
+                    required>
+
+            </div>
+
+            <button type="submit">
+                Update Medicine
+            </button>
+
+        </form>
+
+        <p>
+            <a href="/medicines">← Cancel</a>
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
